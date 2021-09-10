@@ -8,4 +8,6 @@
 `npm start`
 `npm run build`
 
+![card info](card-info.png)
+
 ![cards](cards.png)
