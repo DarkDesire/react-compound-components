@@ -1,23 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
-
+import Card from './components/card';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 function App() {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get('https://reqres.in/api/users?page=2');
+      setUsers(res.data.data)
+    }
+    fetchData()
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {users.map((user, i) => (
+        <Card>
+          <Card.Image
+            src={user.avatar}
+          />
+          <Card.Body>
+            <Card.Title>{user.first_name} {user.last_name}</Card.Title>
+            <Card.Text>{user.email}</Card.Text>
+            <Card.Button>Details</Card.Button>
+          </Card.Body>
+        </Card>
+      ))}
+
     </div>
   );
 }
